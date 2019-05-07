@@ -13,3 +13,9 @@ gh-pages
 
 test/unit/coverage
 test/e2e/reports
+
+build
+config
+docs
+static
+test
