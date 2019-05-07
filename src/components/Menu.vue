@@ -66,12 +66,16 @@
         if (!instance.menu.isOpen) return null
 
         return (
-          <div ref="menu" class="vue-treeselect__menu" onMousedown={instance.handleMouseDown} style={this.menuStyle}>
-            {instance.async
-              ? this.renderAsyncSearchMenuInner()
-              : instance.localSearch.active
-                ? this.renderLocalSearchMenuInner()
-                : this.renderNormalMenuInner()}
+          <div ref="menuWithBottom">
+            <div ref="menu" class="vue-treeselect__menu" onMousedown={instance.handleMouseDown} style={this.menuStyle}>
+              {instance.async
+                ? this.renderAsyncSearchMenuInner()
+                : instance.localSearch.active
+                  ? this.renderLocalSearchMenuInner()
+                  : this.renderNormalMenuInner()}
+              {this.renderCustomBottom()}
+
+            </div>
           </div>
         )
       },
@@ -198,6 +202,14 @@
         return (
           <Tip type="no-results" icon="warning">{ instance.noResultsText }</Tip>
         )
+      },
+
+      renderCustomBottom() {
+        const { instance } = this
+
+        const customBottom = instance.$scopedSlots.bottom
+
+        if (customBottom) return customBottom({})
       },
 
       onMenuOpen() {
